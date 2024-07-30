@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block title %}Artwork Details{% endblock %}
+
+{% block content %}
+<h2>{{ artwork.title }}</h2>
+<p>Artist: {{ artwork.artist_display }}</p>
+<p>Date: {{ artwork.date_display }}</p>
+<p>Classification: {{ artwork.classification_titles }}</p>
+<img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}">
+<p><a href="{{ artwork.api_link }}" target="_blank">More information</a></p>
+<a href="{{ url_for('results') }}">Back to Search Results</a>
+{% endblock %}

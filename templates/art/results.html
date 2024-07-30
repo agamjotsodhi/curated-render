@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block content %}
+<h2>Search Results</h2>
+
+{% if search_results %}
+    <ul>
+        {% for artwork in search_results %}
+            <li>
+                <h3>{{ artwork.title }}</h3>
+                <p>Artist: {{ artwork.artist_display }}</p>
+                <p>Date: {{ artwork.date_display }}</p>
+                <p>Classification: {{ artwork.classification_titles }}</p>
+                <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                    <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}">
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>No results found.</p>
+{% endif %}
+
+<a href="{{ url_for('dashboard') }}">Back to Dashboard</a>
+{% endblock %}
