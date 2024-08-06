@@ -1,8 +1,9 @@
-# Ignore virtual env. 
+# Ignore virtual env.
 venv/
+
+# Ignore macOS .DS_Store files
 .DS_Store
 
-
-
-
-
+# Ignore Python bytecode and __pycache__ directories
+__pycache__/
+*.py[cod]

@@ -10,9 +10,6 @@
     <div>
         {{ form.query.label }} {{ form.query(size=32) }}
     </div>
-    <div>
-        {{ form.themes.label }} {{ form.themes() }}
-    </div>
     <button type="submit">{{ form.submit() }}</button>
 </form>
 
@@ -20,12 +17,12 @@
     <h3>Search Results</h3>
     <ul>
         {% for artwork in search_results %}
-            <li>
+            <li style="margin-bottom: 20px;">
                 <h4>{{ artwork.title }}</h4>
-                <p>Artist: {{ artwork.artist_display }}</p>
-                <p>Date: {{ artwork.date_display }}</p>
-                <p>Classification: {{ artwork.classification_titles }}</p>
-                <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}">
+                <p><strong>Artist:</strong> {{ artwork.artist_display }}</p>
+                <p><strong>Date:</strong> {{ artwork.date_display }}</p>
+                <p><strong>Classification:</strong> {{ artwork.classification_titles }}</p>
+                <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}" style="max-width: 200px;">
             </li>
         {% endfor %}
     </ul>

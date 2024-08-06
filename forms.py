@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, SelectField
+from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, Length
 
 
@@ -32,6 +32,5 @@ class LoginForm(FlaskForm):
 
 class SearchForm(FlaskForm):
     query = StringField('Search', validators=[DataRequired()])
-    themes = SelectField('Themes', choices=[])
     submit = SubmitField('Search')
     
