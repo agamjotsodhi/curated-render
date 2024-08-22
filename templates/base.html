@@ -1,44 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Curated{% endblock %}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-
+    <!-- Font Awesome CDN -->
+    <script src="https://kit.fontawesome.com/7d995d385c.js" crossorigin="anonymous"></script>
 </head>
+
 <body>
-    
-    <header>
-        <nav>
-            <a href="{{ url_for('homepage') }}">Home</a>
-            {% if g.user %}
-                <a href="{{ url_for('dashboard') }}">Dashboard</a>
-                <a href="{{ url_for('explore') }}">Explore</a>
-                <a href="{{ url_for('favorites') }}">Favorites</a>
-                <a href="{{ url_for('profile') }}">Profile</a>
-                <a href="{{ url_for('logout') }}">Logout</a>
-            {% else %}
-                <a href="{{ url_for('login') }}">Login</a>
-                <a href="{{ url_for('signup') }}">Signup</a>
-            {% endif %}
-        </nav>
-    </header>
+
+    <body>
+        <div class="navbar">
+            <header>
+                <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+
+                    <!-- Logo -->
+                    <a class="navbar-brand"
+                        href="{% if g.user %}{{ url_for('dashboard') }}{% else %}{{ url_for('homepage') }}{% endif %}">
+                        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+                    </a>
+
+                    <!-- Conditional Search Bar (Displayed on specific pages) -->
+                    {% if request.endpoint in ['results', 'profile', 'explore', 'favorites', 'artwork'] %}
+                    <form class="navbar-search" action="{{ url_for('results') }}" method="GET">
+                        <input type="text" name="query" placeholder="Search by title, artist name, key words etc..."
+                            value="{{ request.args.get('query', '') }}">
+                        <button type="submit"><i class="fa fa-search"></i></button>
+                    </form>
+                    {% endif %}
+
+                    <!-- Navigation Links -->
+                    <div class="navbar-nav ml-auto">
+
+                        {% if g.user %}
+                        <!-- User is logged in -->
+                        <div class="nav-icons-right">
+                            <!-- Explore Icon with Tooltip -->
+                            <a class="nav-item nav-link" href="{{ url_for('explore') }}">
+                                <i class="fa-solid fa-globe"></i>
+                                <span class="tooltip-text">Explore</span>
+                            </a>
+
+                            <!-- Favorites Icon with Tooltip -->
+                            <a class="nav-item nav-link" href="{{ url_for('favorites') }}">
+                                <i class="fa-solid fa-star"></i>
+                                <span class="tooltip-text">Favorites</span>
+                            </a>
+
+                            <!-- Profile Icon with Tooltip -->
+                            <a class="nav-item nav-link" href="{{ url_for('profile') }}">
+                                <i class="fa-solid fa-user"></i>
+                                <span class="tooltip-text">Profile</span>
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+
+
+                </nav>
+            </header>
+        </div>
+    </body>
 
     <main>
+        <!-- Flashed messages section -->
         {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <ul class="flashes">
-                    {% for category, message in messages %}
-                        <li class="{{ category }}">{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
+        {% if messages %}
+        <ul class="flashes">
+            {% for category, message in messages %}
+            <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
         {% endwith %}
         {% block content %}{% endblock %}
     </main>
 
     <footer>
-        <p>&copy; 2024 Curated</p>
+        <p>&copy; 2024 Curated by Agamjot Sodhi</p>
     </footer>
+
+    <!-- Javascript link -->
+    <script src="{{ url_for('static', filename='app.js') }}"></script>
 </body>
+
 </html>

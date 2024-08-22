@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+
+{% block title %}Profile{% endblock %}
+
+{% block content %}
+<div class="profile-container">
+    <!-- Top Square with Gradient Background -->
+    <div class="top-square">
+        <!-- Profile Picture and Name -->
+        <div class="profile-header">
+            <img src="{{ user.image_url }}" alt="{{ user.username }}'s Profile Picture" class="profile-picture">
+            <div class="profile-name">
+                <p>Your Profile</p>
+                <div class="profile-username">{{ user.username }}</div>
+                <div class="profile-firstname">{{ user.first_name }}</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Details and Actions -->
+    <div class="profile-details-actions">
+        <!-- Profile Actions -->
+        <div class="profile-actions">
+            <a href="{{ url_for('edit_profile') }}" class="btn edit-profile-btn">Edit Profile</a>
+            <a href="{{ url_for('logout') }}" class="btn logout-btn">Logout</a>
+        </div>
+    </div>
+
+    <!-- Suggested for You Section -->
+    <div class="suggested-section">
+        <h3>Curated for You</h3>
+
+        <h4>Suggested artworks based on your favorites</h4>
+        <div class="suggested-content-wrapper">
+            <div class="artwork-row">
+                {% for artwork in suggested_artworks %}
+                <!-- Each suggested artwork -->
+                <div class="artwork-item">
+                    <div class="artwork-thumbnail">
+                        <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                            <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                                alt="{{ artwork.title }}">
+                            <div class="artwork-hover">
+                                <p>View more details</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Favorite Button Under Thumbnail -->
+                    {% if g.user %}
+                    <button class="favorite-btn" data-artwork-id="{{ artwork.id }}"
+                        data-liked="{{ 'true' if artwork.is_liked else 'false' }}">
+                        <i class="{% if artwork.is_liked %}fa-solid{% else %}fa-regular{% endif %} fa-star"></i>
+                    </button>
+                    {% endif %}
+                    <!-- Artwork Information displayed under favorite button -->
+                    <p class="artwork-title">{{ artwork.title }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Refresh Button -->
+        <div class="refresh-button">
+            <form method="GET" action="{{ url_for('profile') }}">
+                <button type="submit" class="explore-btn">Refresh Suggestions</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- My Favorites Section -->
+    <div class="favorites-section">
+        <h3>My Collection
+            <a href="{{ url_for('favorites') }}" class="explore-btn">View All</a>
+        </h3>
+        <h4> Your favorites </h4>
+
+        <div class="favorites-content-wrapper">
+            <div class="artwork-row">
+                {% for favorite in favorites %}
+                <!-- Each favorite artwork -->
+                <div class="artwork-item">
+                    <div class="artwork-thumbnail">
+                        <a href="{{ url_for('artwork', artwork_id=favorite.artwork.id) }}">
+                            <img src="https://www.artic.edu/iiif/2/{{ favorite.artwork.image_id }}/full/843,/0/default.jpg"
+                                alt="{{ favorite.artwork.title }}">
+                            <div class="artwork-hover">
+                                <p>View more details</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Artwork Information displayed under thumbnail -->
+                    <p class="artwork-title">{{ favorite.artwork.title }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

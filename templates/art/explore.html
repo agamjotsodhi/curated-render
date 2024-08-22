@@ -1,8 +1,54 @@
 {% extends "base.html" %}
 
-{% block title %}Explore{% endblock %}
+{% block title %}Explore Artworks{% endblock %}
 
 {% block content %}
-<h1>Explore Page</h1>
-<p>This is a placeholder for the explore page.</p>
+
+<div id="explore-page">
+    <div class="page-header">
+        <h2>Explore New Artworks</h2>
+        <a href="{{ url_for('dashboard') }}" class="back-to-dashboard">
+            <i class="fa-solid fa-circle-arrow-left"></i> Back to Dashboard
+        </a>
+    </div>
+
+    <!-- Display artworks section -->
+    <!-- Each artwork -->
+    <div class="page-content">
+        <div class="artwork-row">
+            {% for artwork in random_artworks %}
+            <div class="artwork-item">
+                <div class="artwork-thumbnail">
+                    <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                        <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                            alt="{{ artwork.title }}">
+                        <div class="artwork-hover">
+                            <p>View more details</p>
+                        </div>
+                    </a>
+                </div>
+                <!-- Favorite button above the title -->
+                {% if g.user %}
+                <button class="favorite-btn" data-artwork-id="{{ artwork.id }}"
+                    data-liked="{{ 'true' if artwork.is_liked else 'false' }}">
+                    <i class="{% if artwork.is_liked %}fa-solid{% else %}fa-regular{% endif %} fa-star"></i>
+                    <span class="tooltip-text">Add to Favorites</span>
+                </button>
+                {% endif %}
+                <!-- Artwork Information displayed under thumbnail -->
+                <p class="artwork-title">{{ artwork.title }}</p>
+                <p class="artwork-info">Artist: {{ artwork.artist_display }}</p>
+                <p class="artwork-info">Date: {{ artwork.date_display }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Refresh button for new artworks -->
+    <div class="refresh-button">
+        <form method="GET" action="{{ url_for('explore') }}">
+            <button type="submit">Refresh Artworks</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

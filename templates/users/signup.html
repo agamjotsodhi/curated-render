@@ -3,20 +3,24 @@
 {% block title %}Signup{% endblock %}
 
 {% block content %}
-<h2 class="signup-message">Create a Curated account</h2>
-<form method="POST" id="user_form">
-    {{ form.hidden_tag() }}
-    
-    {% for field in form if field.widget.input_type != 'hidden' %}
-      {% for error in field.errors %}
+<div class="signup-hero">
+  <div class="signup-overlay">
+    <h2 class="signup-message">Create a Curated account</h2>
+    <form method="POST" id="user_form">
+      {{ form.hidden_tag() }}
+
+      {% for field in form if field.widget.input_type != 'hidden' %}
+      <div class="form-group">
+        <label for="{{ field.id }}" class="form-label">{{ field.label.text }}</label>
+        {% for error in field.errors %}
         <span class="text-danger">{{ error }}</span>
+        {% endfor %}
+        {{ field(class="form-control") }}
+      </div>
       {% endfor %}
-      {{ field(placeholder=field.label.text, class="form-control") }}
-    {% endfor %}
 
-    <button class="btn btn-primary btn-lg btn-block">Sign me up!</button>
-  </form>
+      <button class="btn btn-primary">Sign up</button>
+    </form>
+  </div>
 </div>
-</div>
-
 {% endblock %}

@@ -1,0 +1,1409 @@
+/* CSS Styles for Curated */
+
+/* Base styles for website */
+html,
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Helvetica', Arial, sans-serif;
+    /*website font */
+    background-color: #121212;
+    color: white;
+}
+
+footer {
+    margin-top: 40px;
+    background-color: #181818;
+}
+
+/* Tooltip - icon hover styling _____________________________________________________ */
+
+
+.nav-item,
+.favorite-btn {
+    position: relative;
+    display: inline-block;
+}
+
+/* styled text display on icon hover */
+.tooltip-text {
+    visibility: hidden;
+    background-color: #333;
+    color: #fff;
+    padding: 5px;
+    border-radius: 3px;
+    position: absolute;
+    bottom: 100%;
+    /* Position the tooltip above the icon */
+    left: 50%;
+    transform: translateX(-50%);
+    white-space: nowrap;
+    font-size: 0.8rem;
+    z-index: 1;
+}
+
+.nav-item:hover .tooltip-text,
+.favorite-btn:hover .tooltip-text {
+    visibility: visible;
+}
+
+/* NAVBAR ____________________________________________________________________ */
+
+/* Overall navbar design */
+.navbar {
+    background-color: rgb(209, 62, 25);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 90px;
+    width: 100%;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+
+    /* Drop shadow under nav bar */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.935);
+
+}
+
+/* Ensure content doesn't go under the navbar */
+body {
+    padding-top: 90px;
+}
+
+/* Logo on the left */
+.navbar .navbar-brand {
+    margin-right: auto;
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation items on the right */
+.nav-icons-right {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 40px;
+}
+
+/* Space between icons */
+.nav-icons-right .nav-link {
+    /* Space in between icons */
+    padding: 10px 15px;
+
+}
+
+/* Custom icon size */
+.nav-icons-right .nav-link i {
+    font-size: 1.25rem;
+    color: white;
+}
+
+/* Change icon color on hover */
+.nav-icons-right .nav-link:hover i {
+    /* Icon turns dark orange on hover */
+    color: #8c3502;
+
+}
+
+/* Custom logo size */
+.logo {
+    height: 50px;
+    width: auto;
+}
+
+/* Search bar in navbar on everypage except dashboard */
+.navbar-search {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-right: 300px;
+    /* Adjust space between search bar and nav icons */
+    color: white;
+}
+
+/* nav searchbar input */
+.navbar-search input[type="text"] {
+    padding: 10px;
+    border-radius: 30px;
+    width: 400px;
+    border: none;
+    background-color: #5b2201a7;
+    margin-right: 5px;
+    color: white;
+}
+
+/* Place holder text */
+.navbar-search input[type="text"]::placeholder {
+    color: #ffffff;
+}
+
+.navbar-search button {
+    background-color: #5b2201a7;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+/* Home page - login/signup landing page ___________________________________________________________________________*/
+
+.home-hero {
+    /* Imported artwork collage for background */
+    background-image: url("/static/images/home.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: flex-end;
+    /* Align the overlay to the right */
+    color: white;
+    position: relative;
+    /* Needed for positioning the overlay */
+}
+
+/* Dark gray square over background on right side */
+.content-overlay {
+    background: linear-gradient(to bottom, rgb(43, 43, 43), rgb(17, 17, 17));
+    width: 32%;
+    height: 100%;
+    padding: 30px;
+    padding-top: 60px;
+    /* Padding to bring content higher up */
+    box-shadow: 0px 15px 15px rgb(0, 0, 0);
+    z-index: 2;
+    /* Ensure this content is above the background image */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /* Align content to the top */
+    align-items: flex-start;
+    /* Align headers to the left */
+    position: absolute;
+    /* Position relative to the .home-hero */
+    right: 0;
+    top: 0;
+    border-radius: 0;
+}
+
+.account-content {
+    margin-top: 20px;
+}
+
+.content-overlay h4 {
+    font-size: 1.5rem;
+    margin-top: 10px;
+
+}
+
+/* Home Button Designs */
+.home-hero .btn {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 12px 65px;
+    border-radius: 30px;
+    text-decoration: none;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+    margin: 15px 0;
+    display: inline-block;
+    text-align: center;
+}
+
+/* Sign up btn - primary button style */
+.btn-primary {
+    border: none;
+    background-color: #b63300;
+    /* Orange red */
+    color: rgb(255, 255, 255);
+}
+
+/* Sign up btn hover effect */
+.btn-primary:hover {
+    background-color: #d94820;
+    /* Lighter shade on hover */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    /* Stronger shadow on hover */
+}
+
+/* Secondary button style */
+.btn-secondary {
+    border: 2px solid #b63300;
+    /* Stronger border */
+    background-color: transparent;
+    color: #c83f09;
+    /* Orange red */
+    padding: 12px 65px;
+    /* Ensure padding matches the primary button */
+}
+
+/* Log in button hover effect */
+.btn-secondary:hover {
+    background-color: #b63300;
+    /* Fill btn on hover */
+    color: white;
+    /* Text color, white */
+    box-shadow: 0 12px 20px rgba(0, 0, 0, 0.4);
+    /* Stronger shadow on hover */
+}
+
+/* Signup page ______________________________________________________________________ */
+
+.signup-hero {
+
+    background-image: url("/static/images/signup.jpg");
+    /* Imported background image */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Center overlay horizontally */
+    align-items: center;
+    /* Center overlay vertically */
+    position: relative;
+    /* positioning the overlay */
+}
+
+/* Overlay square for signup form */
+.signup-overlay {
+    background-color: rgba(20, 20, 20, 0.942);
+    /* Dark gray with transparency */
+    width: 30%;
+    /* Wider width */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.8);
+    /* Shadow for depth */
+    z-index: 2;
+    /* Ensure this content is above the background image */
+    text-align: center;
+    /* Center text within the overlay */
+    scale: 80%;
+}
+
+.signup-message {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+#user_form {
+    width: 100%;
+    /* Ensure the form takes full width of the overlay */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center all form content */
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    /* Space between fields */
+    text-align: left;
+    /* Align labels and errors to the left */
+}
+
+.form-label {
+
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    background-color: #494949;
+    color: white;
+    border: none;
+    padding: 15px;
+    margin-top: 5px;
+    width: 100%;
+    /* Full width for input boxes */
+    border-radius: 5px;
+}
+
+.form-control::placeholder {
+    color: #cfcfcf;
+}
+
+.signup-overlay .btn-primary {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+
+/* Login page ________________________________________________________________________*/
+.login-hero {
+    background-image: url("/static/images/login.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* Center the overlay horizontally */
+    align-items: center;
+    /* Center the overlay vertically */
+    position: relative;
+    /* Needed for positioning the overlay */
+}
+
+.login-overlay {
+    background-color: rgba(29, 29, 29, 0.9);
+    /* Dark gray with transparency */
+    width: 40%;
+    padding: 50px;
+    border-radius: 20px;
+    box-shadow: 0px 15px 15px rgba(0, 0, 0, 0.8);
+    z-index: 2;
+    /* Ensure this content is above the background image */
+    text-align: center;
+    /* Center text within the overlay */
+}
+
+.login-message {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 40px;
+}
+
+#user_form {
+    width: 100%;
+    /* Ensure the form takes full width of the overlay */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center all form content */
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.form-label {
+    color: #ffffff;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    background-color: #494949;
+    color: white;
+    border: none;
+    padding: 15px;
+    margin-top: 5px;
+    width: 100%;
+    /* Full width for input boxes */
+    border-radius: 5px;
+}
+
+.form-control::placeholder {
+    color: #cfcfcf;
+}
+
+.signup-redirect {
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 1rem;
+}
+
+.signup-redirect a {
+    color: #b63300;
+    font-weight: bold;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.signup-redirect a:hover {
+    color: #d94820;
+    text-decoration: underline;
+}
+
+
+/* __________________________________________________________________________________________ */
+/* Dashboard Page Styling */
+
+/* page style */
+.dashboard {
+    padding: 40px;
+    /* Ensures text is readable over the background */
+}
+
+/* page header */
+.dashboard h2 {
+    font-size: 2rem;
+    margin-left: 20px;
+    padding: 10px 15px;
+}
+
+/* Search Forms Container */
+/* Search bar query, categories and color search */
+.search-container {
+    max-width: 95%;
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Large search box for the top search bar */
+.search-box-large {
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(206, 206, 206, 0.118), rgba(17, 17, 17, 0.955));
+    border-radius: 8px;
+    padding: 20px;
+    width: 97%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.784);
+}
+
+/* Row for the two smaller search boxes */
+.search-box-row {
+    display: flex;
+    gap: 20px;
+}
+
+
+/* Small search boxes */
+.search-box-small {
+    background: linear-gradient(to bottom, rgba(206, 206, 206, 0.118), rgba(17, 17, 17, 0.955));
+    /* Gradient background */
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.784);
+    flex: 1;
+    color: white;
+}
+
+/* Search Input and Button Styling */
+.search-input {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.search-input input[type="text"],
+.search-input input[type="color"],
+.search-input select {
+    width: 70%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    font-size: 1rem;
+}
+
+.search-input input::placeholder {
+    color: #ffffff;
+}
+
+.search-input input[type="color"] {
+    width: 25%;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    /* Remove default border */
+    cursor: pointer;
+    /* Change cursor to pointer */
+
+}
+
+/* Dropdown Styling to Match Text Input */
+.search-input select {
+    appearance: none;
+    /* Removes default arrow for all browsers */
+    padding-right: 30px;
+    /* Space for custom arrow */
+}
+
+/* Button Styling */
+.form-buttons {
+    padding: 15px 25px;
+    border-radius: 100px;
+    background-color: #FF4500;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.form-buttons i {
+    font-size: 16px;
+}
+
+/* Button Hover Effect */
+.form-buttons:hover {
+    background-color: #b84113;
+}
+
+/* Dashboard/ Explore section */
+.explore-section {
+    margin-top: 70px;
+}
+
+
+.artwork-item {
+    position: relative;
+    width: 250px;
+    /* Standard width for each artwork */
+    text-align: center;
+    padding: 15px;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2), rgba(38, 36, 36, 0.955));
+    /* Gradient background */
+    border-radius: 15px;
+    /* Gradient background */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.4);
+    margin-right: 10px;
+}
+
+.artwork-item:last-child {
+    margin-right: 0;
+}
+
+.favorite-btn {
+    background: #242424;
+    padding: 0;
+    border: 2px solid #FF4500;
+    /* Emphasized border */
+    border-radius: 50%;
+    color: #FF4500;
+    font-size: 18px;
+    /* Visible and clear */
+    cursor: pointer;
+    transition: color 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+    /* Soft shadow for depth */
+}
+
+/* Favorite Button Styling */
+
+/* Light (Unfavorited) Star Style */
+.favorite-btn .fa-light {
+    color: #ccc;
+    /* Subtle grey color for unfavorited state */
+}
+
+/* Solid (Favorited) Star Style */
+.favorite-btn .fa-solid {
+    color: #FFCC00;
+    /* Bright gold color for favorited state */
+}
+
+/* Hover Effect */
+.favorite-btn:hover {
+    color: #FFFFFF;
+    background-color: #FF4500;
+    border-color: #FF4500;
+    transform: scale(1.1);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.7);
+}
+
+/* Active State for Button Press */
+.favorite-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+    /* Pressed button effect */
+}
+
+/* Thumbnail Styling */
+.artwork-thumbnail {
+    position: relative;
+    overflow: hidden;
+    border-radius: 15px;
+    /* Rounded corners */
+    transition: transform 0.3s ease;
+    width: 100%;
+    /*fixed height for container */
+    height: 250px;
+    background-color: #181818;
+    display: flex;
+    /* flexbox to center the image */
+    align-items: center;
+    justify-content: center;
+}
+
+/* Image Styling */
+.artwork-thumbnail img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    /* Fit the image within the container without cutting it */
+    border-radius: 15px;
+}
+
+/* Hover Effect Styling */
+.artwork-hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    opacity: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* Center content vertically */
+    align-items: center;
+    /* Center content horizontally */
+    padding: 20px;
+    transition: opacity 0.3s ease;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+/* Hover Text Styling */
+.artwork-hover p {
+    text-align: center;
+    margin-right: 25px;
+    font-size: 15px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Hover Effect on Item */
+.artwork-item:hover .artwork-hover {
+    opacity: 1;
+}
+
+/* Hover Effect on Thumbnail */
+.artwork-item:hover .artwork-thumbnail {
+    transform: scale(1.05);
+}
+
+/* Title Styling */
+.artwork-title {
+    text-align: left;
+    font-size: 1rem;
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.artwork-info {
+    text-align: left;
+    font-size: 0.90rem;
+    color: #fdf9e7;
+    margin-top: 4px;
+    font-weight: normal;
+    line-height: 1.2;
+}
+
+/* Artwork Row Styling */
+.artwork-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+    /* Ensure the gap between items */
+}
+
+.explore-section h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.7rem;
+    color: #fff;
+}
+
+.explore-section h4 {
+    padding-bottom: 35px;
+    margin-top: -20px;
+    font-weight: lighter;
+    font-size: 1rem;
+}
+
+
+
+.explore-btn {
+    margin-left: 10px;
+    border: 1px solid #b63300;
+    background-color: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+}
+
+.explore-btn:hover {
+    background: #b63300;
+}
+
+/* suggested for you section */
+.suggested-section h3 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.7rem;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+}
+
+.suggested-section h4 {
+    padding-bottom: 30px;
+    margin-top: -40px;
+    font-weight: lighter;
+    font-size: 1rem;
+}
+
+
+/* Explore page */
+/* Explore Page Specific Styles */
+
+#explore-page {
+    padding: 35px;
+    min-height: 100vh;
+}
+
+#explore-page h2 {
+    font-size: 2rem;
+    padding: 10px 10px;
+    color: #fffcf4;
+    text-align: left;
+    margin-top: 20px;
+}
+
+.page-content {
+    /* Content square that artworks are placed on */
+    background-color: #222222;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 96%;
+    margin: 0 auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.844);
+}
+
+/* Artwork Grid for artworks to be displayed in */
+.artwork-grid {
+    display: grid;
+    /* 3 columns layout */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    /* Space between items */
+
+}
+
+/* Individual artwork */
+#explore-page .artwork-item {
+    background-color: #000000;
+    border-radius: 15px;
+    overflow: hidden;
+    /* Clip content within the rounded rectangle */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.955);
+    position: relative;
+    /* Needed for the hover effect */
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+/* Refresh button */
+.refresh-button {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.refresh-button button {
+    cursor: pointer;
+    border: 1px solid #b63300;
+    background-color: rgb(37, 37, 37);
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+    display: inline-block;
+    /* Ensures the button is treated as an inline element for centering */
+}
+
+.refresh-button button:hover {
+    background: #b63300;
+}
+
+
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.page-header h2 {
+    font-size: 2em;
+    padding: 20px 5px;
+}
+
+.explore-header h2 {
+    margin: 0;
+    font-size: 2rem;
+    color: #ffffff;
+}
+
+/* Back to Dashboard Button */
+.back-to-dashboard {
+    border: 1px solid #b63300;
+    background-color: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+    /* Drop shadow */
+}
+
+/* Back to dashboard icon */
+.back-to-dashboard i {
+    margin-right: 8px;
+}
+
+.back-to-dashboard:hover {
+    background-color: #b63300;
+}
+
+/* Favorite page _______________________________________________________________________*/
+
+/* General page styling */
+#favorites-page {
+    padding: 35px;
+    min-height: 100vh;
+}
+
+#favorites-page h2 {
+    font-size: 2rem;
+    padding: 10px 10px;
+    text-align: left;
+    margin-top: 20px;
+}
+
+/* Content container */
+.favorite-page-content {
+    background-color: #222222;
+    padding: 20px;
+    border-radius: 15px;
+    max-width: 96%;
+    margin: 0 auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.844);
+}
+
+#favorites-page .artwork-item {
+
+    background-color: #000000;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.955);
+    position: relative;
+    padding: 15px;
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+#favorites-page .artwork-grid {
+    margin-left: 10%;
+    align-items: center;
+}
+
+/* Results page */
+#results-page {
+    padding: 10px 60px;
+}
+
+#results-page .artwork-item {
+    margin-bottom: 30px;
+}
+
+
+/* Artwork details page __________________________________________________________________________ */
+
+/* Overall page styling */
+#details-page {
+    background-color: black;
+    padding: 20px;
+    min-height: 100vh;
+    /* Ensure it covers the full height of the viewport */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Artwork Container */
+.artwork-container {
+    background-color: #333;
+    /* Dark gray background */
+    border-radius: 15px;
+    /* Rounded corners */
+    width: 97%;
+    /* Covering 97% of the screen */
+    display: flex;
+    padding: 20px;
+    position: relative;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Back to Dashboard Button */
+.back-to-dashboard {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #FF4500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.back-to-dashboard i {
+    margin-right: 8px;
+    /* Space between icon and text */
+}
+
+.back-to-dashboard:hover {
+    background-color: #e03e00;
+}
+
+/* Artwork Image */
+.artwork-image {
+    flex: 0 0 50%;
+    /* Image takes up 70% of the container */
+    margin-right: 20px;
+    /* Space between image and details */
+}
+
+.artwork-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+    /* Match the container's rounded corners */
+}
+
+/* Artwork Details */
+.artwork-details {
+    flex: 1;
+    color: #fdf9e7;
+    /* Light off-white color for text */
+}
+
+.artwork-details h2 {
+    margin-top: 0;
+    font-size: 2rem;
+    color: #ffffff;
+    /* White color for the title */
+}
+
+.artwork-details p {
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+.artwork-details a {
+
+    text-decoration: none;
+}
+
+.artwork-details a:hover {
+    text-decoration: underline;
+}
+
+/* Fullscreen Overlay */
+.fullscreen-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Fullscreen Content */
+.fullscreen-content {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Close Fullscreen Button */
+.close-fullscreen {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #FF4500;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 1100;
+}
+
+.close-fullscreen i {
+    margin-right: 5px;
+}
+
+/* Zoom Container */
+.zoom-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Fullscreen Image */
+.zoom-container img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    transition: transform 0.3s ease;
+    object-fit: contain;
+    /* Ensure the image fits within the container without being cut off */
+}
+
+/* Zoom In and Zoom Out Buttons */
+.zoom-in,
+.zoom-out {
+    position: absolute;
+    bottom: 20px;
+    background-color: #FF4500;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    z-index: 1100;
+}
+
+.zoom-in {
+    right: 20px;
+}
+
+.zoom-out {
+    right: 170px;
+}
+
+.zoom-in i,
+.zoom-out i {
+    margin-right: 5px;
+}
+
+/* View Fullscreen Button */
+.fullscreen-btn {
+    position: absolute;
+    top: 20 px;
+    left: 20 px;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    color: #ffffff;
+    text-decoration: none;
+    background-color: #FF4500;
+    padding: 8px 12px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+
+}
+
+.fullscreen-btn i {
+    margin-right: 5px;
+}
+
+/* Show Fullscreen */
+.fullscreen-overlay.show {
+    display: flex;
+}
+
+/* Zoom Effect */
+.zoomed-in {
+    transform: scale(2);
+    /* Example scale, adjust as needed */
+}
+
+.zoomed-out {
+    transform: scale(1);
+    /* Reset to original scale */
+}
+
+/* Profile page */
+
+
+/* Content Container */
+.profile-container {
+    background-color: #191919;
+    /* Dark gray background for the rectangle */
+    width: 94%;
+    min-height: 100vh;
+    /* Cover the full height of the viewport */
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 15px;
+    /* Rounded corners */
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    /* Positioning for profile picture and username */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+}
+
+/* Top Square with Gradient */
+.top-square {
+    background: linear-gradient(90deg, #722b193c, #9d3b20be);
+    /* Gradient background */
+    height: 175px;
+    /* Covers 20% of the profile container */
+    border-radius: 15px 15px 0 0;
+    /* Rounded top corners to match the container */
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    /* Aligns profile picture to the bottom left */
+    padding: 20px;
+}
+
+/* Profile Header within Top Square */
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+}
+
+/* Profile Picture */
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    /* Circular shape */
+    object-fit: cover;
+    border: 4px solid #333;
+    /* Matches the dark gray rectangle */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.5);
+    /* Optional shadow for depth */
+    margin-right: 20px;
+    /* Space between picture and name */
+}
+
+/* Profile Name (Username and First Name) */
+.profile-name {
+    bottom: 25px;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-username {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.profile-firstname {
+    font-size: 1rem;
+    color: white;
+}
+
+/* Profile Details and Actions Container */
+.profile-details-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 20px;
+    /* Space above this section */
+    width: 100%
+}
+
+
+/* Profile Actions */
+.profile-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 1rem;
+    color: white;
+    transition: background-color 0.3s ease;
+    text-align: center;
+}
+
+.refresh-button {
+    bottom: 10px;
+    padding-top: 15px;
+    padding-bottom: 10px;
+}
+
+/* Edit */
+.edit-profile-btn {
+    border: 1px solid #b63300;
+    background-color: none;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+}
+
+.edit-profile-btn:hover {
+    background-color: #b63300;
+}
+
+.logout-btn {
+    border: 1px solid #b63300;
+    background-color: #b20000;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+}
+
+.logout-btn:hover {
+    background-color: #c82333;
+}
+
+
+.favorites-content-wrapper {
+    padding-left: 30px;
+    padding-top: 20px;
+    padding-right: 20px;
+}
+
+.favorites-section h3 {
+    padding-left: 10px;
+    font-size: 1.7rem;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    color: #fff;
+}
+
+.favorites-section h4 {
+    padding-left: 10px;
+    padding-bottom: 10px;
+    margin-top: -40px;
+    font-weight: lighter;
+    font-size: 1rem;
+}
+
+
+/* EDIT Profile page */
+/* Container for the Edit Profile Page */
+.edit-background {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Form Container */
+.edit-form-container {
+    background-color: rgb(16, 16, 16);
+    /* Dark gray background with opacity */
+    padding: 30px;
+    border-radius: 18px;
+    box-shadow: 0px 4px 25px rgba(0, 0, 0, 0.926);
+    text-align: center;
+    width: 425px;
+    /* Adjust width as needed */
+}
+
+/* Form Group */
+.form-group {
+    margin-bottom: 40px;
+    text-align: left;
+    margin-right: 20px;
+}
+
+.form-label {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+/* Form Field */
+.form-field {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    background-color: #4242428c;
+    color: #c9c9c9;
+    font-size: 1rem;
+}
+
+/* Update Button */
+.update-btn {
+    cursor: pointer;
+    border: 1px solid #b63300;
+    background-color: #b20000;
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    padding: 15px 20px;
+    border-radius: 25px;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.946);
+}
+
+.update-btn:hover {
+    background-color: #820000;
+}

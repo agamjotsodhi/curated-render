@@ -1,8 +1,55 @@
 {% extends "base.html" %}
 
-{% block title %}Favorites{% endblock %}
+{% block title %}Your Favorites{% endblock %}
 
 {% block content %}
-<h1>Favorites Page</h1>
-<p>This is a placeholder for the explore page.</p>
+
+<!-- Favorites page -->
+<!-- Page headers -->
+<div id="favorites-page">
+    <div class="favorites-header">
+        <h2>Favorited Artworks</h2>
+        <a href="{{ url_for('dashboard') }}" class="back-to-dashboard">
+            <i class="fa-solid fa-circle-arrow-left"></i> Back to Dashboard
+        </a>
+
+        <!-- Favorited artworks, each artwork: -->
+        <div class="page-content">
+            {% if favorited_artworks %}
+            <div class="artwork-grid">
+                {% for artwork in favorited_artworks %}
+                <div class="artwork-item">
+                    <div class="artwork-thumbnail">
+                        <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                            <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                                alt="{{ artwork.title }}">
+                            <div class="artwork-hover">
+                                <p>View more details</p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Favorite button -->
+                    {% if g.user %}
+                    <button class="favorite-btn" data-artwork-id="{{ artwork.id }}" data-liked="true">
+                        <i class="fa-solid fa-star"></i>
+                    </button>
+                    {% endif %}
+                    <p class="artwork-title">{{ artwork.title }}</p>
+                    <p class="artwork-info">Artist: {{ artwork.artist_display }}</p>
+                    <p class="artwork-info">Date: {{ artwork.date_display }}</p>
+                    <p class="artwork-info">Classification: {{ artwork.classification_titles }}</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="no-fav">
+                <!-- If no artworks display: -->
+                <p>Oops, no favorites yet!</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</div>
 {% endblock %}

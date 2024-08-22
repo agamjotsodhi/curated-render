@@ -3,25 +3,70 @@
 {% block title %}Artwork Details{% endblock %}
 
 {% block content %}
-<h2>{{ artwork.title }}</h2>
+<div id="details-page">
 
-<p><strong>Artist:</strong> {{ artwork.artist_display }}</p>
-<p><strong>Date:</strong> {{ artwork.date_display }}</p>
-<p><strong>Start Date:</strong> {{ artwork.date_start }}</p>
-<p><strong>End Date:</strong> {{ artwork.date_end }}</p>
-<p><strong>Place of Origin:</strong> {{ artwork.place_of_origin }}</p>
-<p><strong>Classification:</strong> {{ artwork.classification_titles }}</p>
-<p><strong>Edition:</strong> {{ artwork.edition }}</p>
-<p><strong>Color:</strong> {{ artwork.color }}</p>
-<p><strong>Dimensions:</strong> {{ artwork.dimensions }}</p>
-<p><strong>Description:</strong> {{ artwork.description }}</p>
-<p><strong>Medium:</strong> {{ artwork.medium_display }}</p>
-<p><strong>Type:</strong> {{ artwork.artwork_type_title }}</p>
-<p><strong>API Link:</strong> <a href="{{ artwork.api_link }}">{{ artwork.api_link }}</a></p>
+    <div class="artwork-container">
+        <!-- Back to dashboard link -->
+        <a href="{{ url_for('dashboard') }}" class="back-to-dashboard">
+            <i class="fa-solid fa-circle-arrow-left"></i> Back to Dashboard
+        </a>
 
-{% if artwork.image_id %}
-    <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}">
-{% endif %}
+        <!-- Fullscreen button placed above image -->
+        <button class="fullscreen-btn" onclick="openFullscreen()">
+            <i class="fa-solid fa-expand"></i> Take a closer look
+        </button>
 
-<a href="{{ url_for('results') }}">Back to Results</a>
+        <!-- Display the artwork image -->
+        <div class="artwork-image">
+            <img id="artwork-image" src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                alt="{{ artwork.title }}">
+        </div>
+
+        <!-- Display the artwork details -->
+        <div class="artwork-details">
+            <h2>{{ artwork.title }}</h2>
+
+            <!-- Favorite button for logged-in users -->
+            {% if g.user %}
+            <button class="favorite-btn" data-artwork-id="{{ artwork.id }}"
+                data-liked="{{ 'true' if artwork.is_liked else 'false' }}">
+                <i class="{% if artwork.is_liked %}fa-solid{% else %}fa-regular{% endif %} fa-star"></i>
+                <span class="tooltip-text">Add to Favorites</span>
+            </button>
+            {% endif %}
+
+            <!-- Artwork data display -->
+            <p><strong>Artist:</strong> {{ artwork.artist_display }}</p>
+            <p><strong>Date:</strong> {{ artwork.date_display }}</p>
+            <p><strong>Start Date:</strong> {{ artwork.date_start }}</p>
+            <p><strong>End Date:</strong> {{ artwork.date_end }}</p>
+            <p><strong>Place of Origin:</strong> {{ artwork.place_of_origin }}</p>
+            <p><strong>Classification:</strong> {{ artwork.classification_titles }}</p>
+            <p><strong>Edition:</strong> {{ artwork.edition }}</p>
+            <p><strong>Color:</strong> {{ artwork.color }}</p>
+            <p><strong>Dimensions:</strong> {{ artwork.dimensions }}</p>
+            <p><strong>Description:</strong> {{ artwork.description }}</p>
+            <p><strong>Medium:</strong> {{ artwork.medium_display }}</p>
+            <p><strong>Type:</strong> {{ artwork.artwork_type_title }}</p>
+
+        </div>
+    </div>
+
+    <!-- Fullscreen overlay for zooming in on artwork -->
+    <div id="fullscreen-overlay" class="fullscreen-overlay">
+        <div class="fullscreen-content">
+            <!-- Close fullscreen button -->
+            <button class="close-fullscreen" onclick="closeFullscreen()"><i class="fa-solid fa-times"></i>
+                Close</button>
+            <div class="zoom-container">
+                <!-- Fullscreen image with zoom controls -->
+                <img id="fullscreen-image"
+                    src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                    alt="{{ artwork.title }}">
+                <button class="zoom-in" onclick="zoomIn()"><i class="fa-solid fa-search-plus"></i> Zoom In</button>
+                <button class="zoom-out" onclick="zoomOut()"><i class="fa-solid fa-search-minus"></i> Zoom Out</button>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

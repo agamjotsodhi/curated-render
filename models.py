@@ -24,10 +24,9 @@ class User(db.Model):
 
     # Relationships to the User:
     favorites = db.relationship('Favorite', backref='user', cascade="all, delete-orphan")
-    # search_histories = db.relationship('SearchHistory', backref='searched_user', cascade="all, delete-orphan")
+    search_histories = db.relationship('SearchHistory', backref='searched_user', cascade="all, delete-orphan")
 
     # User class methods:
-
     @classmethod        
     def signup(cls, username, email, password, image_url, first_name):  
         """Hashes user inputted password and adds to the database"""
@@ -54,35 +53,35 @@ class User(db.Model):
 
 
 class Artwork(db.Model):
-    """Artwork in the application"""
+    """All data per each artwork """
 
     __tablename__ = 'artworks'
 
-    id = db.Column(db.Integer, primary_key=True)  # Primary key of the artwork
-    title = db.Column(db.String, nullable=False)  # Title of the artwork
-    alt_titles = db.Column(db.String, nullable=True)  # Alternative titles of the artwork
-    artist_display = db.Column(db.String, nullable=True)  # Artist display name of the artwork
-    date_start = db.Column(db.Integer, nullable=True)  # Start date of the artwork creation
-    date_end = db.Column(db.Integer, nullable=True)  # End date of the artwork creation
+    id = db.Column(db.Integer, primary_key=True)  # Primary key - artwork id
+    title = db.Column(db.String, nullable=False)  # Artwork title
+    alt_titles = db.Column(db.String, nullable=True)  # Alternative titles
+    artist_display = db.Column(db.String, nullable=True)  # Artist display name of artwork
+    date_start = db.Column(db.Integer, nullable=True)  # Artwork start date
+    date_end = db.Column(db.Integer, nullable=True)  # Artword end date
     date_display = db.Column(db.String, nullable=True)  # Display date of the artwork
     place_of_origin = db.Column(db.String, nullable=True)  # Place of origin of the artwork
     classification_titles = db.Column(db.String, nullable=True)  # Classification titles of the artwork
-    edition = db.Column(db.String, nullable=True)  # Edition of the artwork
-    color = db.Column(db.String, nullable=True)  # Color of the artwork
-    dimensions = db.Column(db.String, nullable=True)  # Dimensions of the artwork
+    edition = db.Column(db.String, nullable=True)  # Artwork edition
+    color = db.Column(db.String, nullable=True)  # HSL color codes used in artwork
+    dimensions = db.Column(db.String, nullable=True)  # Size and dimensions of work
     description = db.Column(db.String, nullable=True)  # Description of the artwork
     image_id = db.Column(db.String, nullable=True)  # Image ID of the artwork
-    artwork_type_title = db.Column(db.String, nullable=True)  # Artwork type title of the artwork
+    artwork_type_title = db.Column(db.String, nullable=True)  # Artwork type - category of work
     api_link = db.Column(db.String, nullable=True)  # API link for the artwork
     medium_display = db.Column(db.String, nullable=True)  # Medium display of the artwork
     type_id = db.Column(db.Integer, db.ForeignKey('types.id'), nullable=True)  # Foreign key to the type
 
     @classmethod
     def add_new_artwork(cls, data):
-        """Add a new artwork entry."""
+        """Adds a new artwork entry to records."""
         type_instance = Type.get_or_create(data.get('artwork_type_title'))  # Get or create the type
         
-        # Convert color to JSON string if it's a dictionary
+        # Convert color (HSL color codes) to JSON string if it's a dictionary
         color = json.dumps(data.get('color')) if isinstance(data.get('color'), dict) else data.get('color')
         
         # Create the artwork entry
@@ -106,14 +105,14 @@ class Artwork(db.Model):
             medium_display=data.get('medium_display'),
             type=type_instance  # Associate with the type
         )
-        db.session.add(artwork)
+        db.session.merge(artwork)
         db.session.commit()
         
         return artwork
 
 
 class Type(db.Model):
-    """Artwork type in the application"""
+    """Artwork types in the application - to sort artworks by the same art type"""
 
     __tablename__ = 'types'
 
@@ -131,6 +130,11 @@ class Type(db.Model):
             db.session.add(type_instance)
             db.session.commit()
         return type_instance
+    
+    
+    def get_artwork_ids(self):
+        """Get all artwork IDs for this type."""
+        return [artwork.id for artwork in self.artworks]
 
 
 class Favorite(db.Model):
@@ -141,7 +145,8 @@ class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)  # Primary key of the favorite
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)  # Foreign key to the user
     artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id', ondelete="cascade"), nullable=False)  # Foreign key to the artwork
-    saved_at = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Timestamp when the favorite was saved
+    artwork = db.relationship('Artwork', backref='favorites', lazy=True)
+
 
 
 class SearchHistory(db.Model):
@@ -152,9 +157,7 @@ class SearchHistory(db.Model):
     search_id = db.Column(db.Integer, primary_key=True)  # Primary key of the search history
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)  # Foreign key to the user
     search_term = db.Column(db.String, nullable=False)  # The search term used by the user
-    # timestamp = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)  # Timestamp of the search
-    # searched_user = db.relationship('User', backref='search_histories', lazy=True)
-
+    
     @classmethod
     def save_history(cls, user_id, search_term):
         """Save a search term to the search history."""

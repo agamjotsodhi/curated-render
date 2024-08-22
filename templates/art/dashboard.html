@@ -3,28 +3,138 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block content %}
-<h2>Welcome to your dashboard, {{ g.user.first_name }}!</h2>
+<div class="dashboard">
+    <h2>Welcome to your dashboard, {{ g.user.first_name }}!</h2>
 
-<form method="POST" action="/dashboard">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.query.label }} {{ form.query(size=32) }}
+    <!-- Search Forms Container -->
+    <div class="search-container">
+
+        <!-- Search by Query -->
+        <div class="search-box search-box-large">
+            <h3>Search by Query</h3>
+            <form method="POST" action="{{ url_for('dashboard') }}" id="search-form">
+                {{ search_form.hidden_tag() }}
+                <div class="search-input">
+                    {{ search_form.query(size=32, placeholder="Search by title, artist, year or keywords...") }}
+                    <button type="submit" class="form-buttons" name="submit" value="Search">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- Search by Category and Search by Color -->
+        <div class="search-box-row">
+            <!-- Search by Category -->
+            <div class="search-box search-box-small">
+                <h3>Search by Category</h3>
+                <form method="POST" action="{{ url_for('dashboard') }}" id="type-form">
+                    {{ type_form.hidden_tag() }}
+                    <div class="search-input">
+                        {{ type_form.artwork_type(class_="custom-select") }}
+                        <button type="submit" class="form-buttons" name="submit" value="Search">
+                            <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Search by Color -->
+            <div class="search-box search-box-small">
+                <h3>Search by Color</h3>
+                <h5>Click below to select a color</h5>
+                <form method="POST" action="{{ url_for('dashboard') }}" id="color-form">
+                    {{ color_form.hidden_tag() }}
+                    <div class="search-input">
+                        <input type="color" id="color-picker">
+                        {{ color_form.color }}
+                        <button type="submit" class="form-buttons" name="submit" value="Search">
+                            <i class="fa-solid fa-arrow-right"></i>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    <button type="submit">{{ form.submit() }}</button>
-</form>
 
-{% if search_results %}
-    <h3>Search Results</h3>
-    <ul>
-        {% for artwork in search_results %}
-            <li style="margin-bottom: 20px;">
-                <h4>{{ artwork.title }}</h4>
-                <p><strong>Artist:</strong> {{ artwork.artist_display }}</p>
-                <p><strong>Date:</strong> {{ artwork.date_display }}</p>
-                <p><strong>Classification:</strong> {{ artwork.classification_titles }}</p>
-                <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg" alt="{{ artwork.title }}" style="max-width: 200px;">
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
-{% endblock %}
+    <!-- Explore new artworks section -->
+    <div class="explore-section">
+        <h3>Explore
+            <a href="{{ url_for('explore') }}" class="explore-btn">Explore more</a>
+        </h3>
+        <h4>Discover new artworks</h4>
+        <div class="explore-content-wrapper">
+            <div class="artwork-row">
+                {% for artwork in random_artworks %}
+                <!-- Each artwork -->
+                <div class="artwork-item">
+                    <div class="artwork-thumbnail">
+                        <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                            <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                                alt="{{ artwork.title }}">
+                            <div class="artwork-hover">
+                                <p>View more details</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Favorite button above the title -->
+                    {% if g.user %}
+                    <button class="favorite-btn" data-artwork-id="{{ artwork.id }}"
+                        data-liked="{{ 'true' if artwork.is_liked else 'false' }}">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-solid fa-star" style="display: none;"></i>
+                        <span class="tooltip-text">Add to Favorites</span>
+                    </button>
+
+                    {% endif %}
+                    <!-- Artwork Information displayed under thumbnail -->
+                    <p class="artwork-title">{{ artwork.title }}</p>
+                    <p class="artwork-info">Artist: {{ artwork.artist_display }}</p>
+                    <p class="artwork-info">Date: {{ artwork.date_display }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Suggested for You Section -->
+    <div class="suggested-section">
+        <h3>Curated for You
+            <a href="{{ url_for('profile') }}" class="explore-btn">View more</a>
+        </h3>
+
+        <h4>Suggested artworks based on your favorites</h4>
+        <div class="suggested-content-wrapper">
+            <div class="artwork-row">
+                {% for artwork in suggested_artworks %}
+                <!-- Each suggested artwork -->
+                <div class="artwork-item">
+                    <div class="artwork-thumbnail">
+                        <a href="{{ url_for('artwork', artwork_id=artwork.id) }}">
+                            <img src="https://www.artic.edu/iiif/2/{{ artwork.image_id }}/full/843,/0/default.jpg"
+                                alt="{{ artwork.title }}">
+                            <div class="artwork-hover">
+                                <p>View more details</p>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- Favorite button above the title -->
+                    {% if g.user %}
+                    <button class="favorite-btn" data-artwork-id="{{ artwork.id }}"
+                        data-liked="{{ 'true' if artwork.is_liked else 'false' }}">
+                        <i class="fa-regular fa-star"></i>
+                        <i class="fa-solid fa-star" style="display: none;"></i>
+                        <span class="tooltip-text">Add to Favorites</span>
+                    </button>
+
+                    {% endif %}
+                    <!-- Artwork Information displayed under thumbnail -->
+                    <p class="artwork-title">{{ artwork.title }}</p>
+                    <p class="artwork-info">Artist: {{ artwork.artist_display }}</p>
+                    <p class="artwork-info">Date: {{ artwork.date_display }}</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    {% endblock %}

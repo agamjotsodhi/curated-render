@@ -1,11 +1,19 @@
 {% extends 'base.html' %}
+
+<!-- Landing page to login/sign up -->
 {% block content %}
-  <div class="home-hero">
-    <h1>View, Learn and Discover Art.</h1>
-    <h4>New to Curated?</h4>
-    <p>Sign up now to get your own personalized timeline!</p>
-    <a href="/signup" class="btn btn-primary">Sign up</a>
-    <p>Already have an account?</p>
-    <a href="/login" class="btn btn-secondary">Login</a>
+<div class="home-hero">
+  <div class="content-overlay">
+    <h1>View, Learn and Discover Art</h1>
+    <h4>Curate Today</h4>
+    <div class="account-content">
+      <p>Sign up now to get your own personalized timeline!</p>
+      <!-- Sign up button redirect -->
+      <a href="/signup" class="btn btn-primary">Sign up</a>
+      <p>Already have an account?</p>
+      <!-- Login button redirect -->
+      <a href="/login" class="btn btn-secondary">Login</a>
+    </div>
   </div>
+</div>
 {% endblock %}

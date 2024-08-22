@@ -3,18 +3,28 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-<h2 class ="join_message">Welcome back.</h2>
+<div class="login-hero">
+    <div class="login-overlay">
+        <h2 class="login-message">Welcome back.</h2>
+        <form method="POST" id="user_form">
+            {{ form.hidden_tag() }}
 
-<form method="POST" id="user_form">
-    {{ form.hidden_tag() }}
-    <div>
-        {{ form.username.label }}
-        {{ form.username }}
+            <div class="form-group">
+                <label for="{{ form.username.id }}" class="form-label">{{ form.username.label.text }}</label>
+                {{ form.username(class="form-control") }}
+            </div>
+
+            <div class="form-group">
+                <label for="{{ form.password.id }}" class="form-label">{{ form.password.label.text }}</label>
+                {{ form.password(class="form-control") }}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+
+        <p class="signup-redirect">
+            New to Curated? <a href="{{ url_for('signup') }}">Signup for an account here.</a>
+        </p>
     </div>
-    <div>
-        {{ form.password.label }}
-        {{ form.password }}
-    </div>
-    <button type="submit">Login</button>
-</form>
+</div>
 {% endblock %}
