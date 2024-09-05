@@ -8,34 +8,24 @@ from models import User, Artwork, Favorite, SearchHistory, Type, db, connect_db 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql import cast, func
 from sqlalchemy.types import Integer
-import json, os
+import json
 from api import get_artwork_by_ids, fetch_artworks_batches, fetch_artworks_by_query, get_suggested_artworks
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_sqlalchemy import SQLAlchemy
 
 # Connection to sql database - curated:
 app = Flask(__name__)
-
-# Supabase connection
-app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')  # Supabase connection string from environment variable
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///curated'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['SECRET_KEY'] = 'secret_picasso_101'
 
-# secret key
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'default_secret_key')  # environment variable 
 
-""" Comment out below to use the Debug Toolbar and debugging mode:
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # Prevent toolbar from intercepting redirects
-app.debug = False  # Set to False in production
-"""
+app.debug = True  # Enable debugging mode
 
-# Initialize the SQLAlchemy extension
-db = SQLAlchemy(app)
+# Initialize the Debug Toolbar
+toolbar = DebugToolbarExtension(app)
 
-""" Comment out below to initialize debug toolbar:
-toolbar = DebugToolbarExtension(app) 
-"""
 
-# Connect Flask app to the database
 connect_db(app)
 
 # Global Variables
