@@ -1,7 +1,17 @@
-# READ ME 
+# Curated, centralized art database to discover, search, and save artwork
 
-## API used for this project: Art institute of Chicago API
-## API docs link: https://api.artic.edu/docs/#introduction
+This project is a web-based art discovery engine designed to help users discover, search, and save artwork to their accounts. The application utilizes a PostgreSQL database to manage and store artworks, user information, and search history, enabling a suggestion-based model for personalized recommendations. It is built with Flask, leveraging Python for backend development, while JavaScript, HTML, and CSS power the front end. The project integrates the Art Institute of Chicago API to retrieve artwork data in JSON format, providing a  diverse collection of international artworks. The user interface features a sleek, modern design with carefully crafted elements to enhance the user experience.
+
+## Visit the Site
+Feel free to check out the website here!
+
+## Features
+
+## Installation
+
+## 
+
+
 ## Base API link: https://api.artic.edu/api/v1/artworks
 
 # DESIGN FLOW based on routes:
