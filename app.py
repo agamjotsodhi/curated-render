@@ -14,7 +14,8 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 # Connection to sql database - curated:
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///curated'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://curated_r101_user:YV6Det6FqmMUPUSlSCWoh38ASv2XS4d3@dpg-creumaaj1k6c73dgi6c0-a/curated_r101'
+
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'secret_picasso_101'
 
