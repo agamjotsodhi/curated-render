@@ -15,20 +15,18 @@ class User(db.Model):
 
     __tablename__ = 'users'
 
-    id = db.Column(db.Integer, primary_key=True)  # Primary key of the user
-    username = db.Column(db.String(50), unique=True, nullable=False)  # Username of the user
-    password = db.Column(db.String(130), nullable=False)  # Hashed password of the user
-    email = db.Column(db.String(75), nullable=False, unique=True)  # Email of the user
-    first_name = db.Column(db.String, nullable=True)  # First name of the user
-    image_url = db.Column(db.Text, default="static/images/default-img.jpg")  # URL of the user's profile image
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(50), unique=True, nullable=False)
+    password = db.Column(db.String(130), nullable=False)
+    email = db.Column(db.String(75), nullable=False, unique=True)
+    first_name = db.Column(db.String, nullable=True)
+    image_url = db.Column(db.Text, default="static/images/default-img.jpg")
 
-    # Relationships to the User:
     favorites = db.relationship('Favorite', backref='user', cascade="all, delete-orphan")
     search_histories = db.relationship('SearchHistory', backref='searched_user', cascade="all, delete-orphan")
 
-    # User class methods:
     @classmethod        
-    def signup(cls, username, email, password, image_url, first_name):  
+    def signup(cls, username, email, password, image_url, first_name):
         """Hashes user inputted password and adds to the database"""
         hashed_pwd = bcrypt.generate_password_hash(password).decode('UTF-8')
 
@@ -57,53 +55,53 @@ class Artwork(db.Model):
 
     __tablename__ = 'artworks'
 
-    id = db.Column(db.Integer, primary_key=True)  # Primary key - artwork id
-    title = db.Column(db.String, nullable=False)  # Artwork title
-    alt_titles = db.Column(db.String, nullable=True)  # Alternative titles
-    artist_display = db.Column(db.String, nullable=True)  # Artist display name of artwork
-    date_start = db.Column(db.Integer, nullable=True)  # Artwork start date
-    date_end = db.Column(db.Integer, nullable=True)  # Artword end date
-    date_display = db.Column(db.String, nullable=True)  # Display date of the artwork
-    place_of_origin = db.Column(db.String, nullable=True)  # Place of origin of the artwork
-    classification_titles = db.Column(db.String, nullable=True)  # Classification titles of the artwork
-    edition = db.Column(db.String, nullable=True)  # Artwork edition
-    color = db.Column(db.String, nullable=True)  # HSL color codes used in artwork
-    dimensions = db.Column(db.String, nullable=True)  # Size and dimensions of work
-    description = db.Column(db.String, nullable=True)  # Description of the artwork
-    image_id = db.Column(db.String, nullable=True)  # Image ID of the artwork
-    artwork_type_title = db.Column(db.String, nullable=True)  # Artwork type - category of work
-    api_link = db.Column(db.String, nullable=True)  # API link for the artwork
-    medium_display = db.Column(db.String, nullable=True)  # Medium display of the artwork
-    type_id = db.Column(db.Integer, db.ForeignKey('types.id'), nullable=True)  # Foreign key to the type
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String, nullable=False)
+    alt_titles = db.Column(db.String, nullable=True)
+    artist_display = db.Column(db.String, nullable=True)
+    date_start = db.Column(db.Integer, nullable=True)
+    date_end = db.Column(db.Integer, nullable=True)
+    date_display = db.Column(db.String, nullable=True)
+    place_of_origin = db.Column(db.String, nullable=True)
+    classification_titles = db.Column(db.String, nullable=True)
+    edition = db.Column(db.String, nullable=True)
+    color = db.Column(db.String, nullable=True)
+    dimensions = db.Column(db.String, nullable=True)
+    description = db.Column(db.String, nullable=True)
+    image_id = db.Column(db.String, nullable=True)
+    artwork_type_title = db.Column(db.String, nullable=True)
+    api_link = db.Column(db.String, nullable=True)
+    medium_display = db.Column(db.String, nullable=True)
+    type_id = db.Column(db.Integer, db.ForeignKey('types.id'), nullable=True)
 
     @classmethod
     def add_new_artwork(cls, data):
         """Adds a new artwork entry to records."""
         type_instance = Type.get_or_create(data.get('artwork_type_title'))  # Get or create the type
         
-        # Convert color (HSL color codes) to JSON string if it's a dictionary
+        # Convert color to JSON string if it's a dictionary
         color = json.dumps(data.get('color')) if isinstance(data.get('color'), dict) else data.get('color')
         
-        # Create the artwork entry
+        # Handle possible missing fields with defaults
         artwork = cls(
             id=data['id'],
-            title=data['title'],
-            alt_titles=data.get('alt_titles'),
-            artist_display=data.get('artist_display'),
-            date_start=data.get('date_start'),
-            date_end=data.get('date_end'),
-            date_display=data.get('date_display'),
-            place_of_origin=data.get('place_of_origin'),
+            title=data.get('title', 'Untitled'),
+            alt_titles=data.get('alt_titles', None),
+            artist_display=data.get('artist_display', 'Unknown Artist'),
+            date_start=data.get('date_start', None),
+            date_end=data.get('date_end', None),
+            date_display=data.get('date_display', 'Unknown Date'),
+            place_of_origin=data.get('place_of_origin', 'Unknown Place'),
             classification_titles=', '.join(data.get('classification_titles', [])),
-            edition=data.get('edition'),
+            edition=data.get('edition', 'Unknown Edition'),
             color=color,
-            dimensions=data.get('dimensions'),
-            description=data.get('description'),
-            image_id=data.get('image_id'),
-            artwork_type_title=data.get('artwork_type_title'),
-            api_link=data.get('api_link'),
-            medium_display=data.get('medium_display'),
-            type=type_instance  # Associate with the type
+            dimensions=data.get('dimensions', 'Unknown Dimensions'),
+            description=data.get('description', 'No Description Available'),
+            image_id=data.get('image_id', None),
+            artwork_type_title=data.get('artwork_type_title', 'Unknown Type'),
+            api_link=data.get('api_link', None),
+            medium_display=data.get('medium_display', 'Unknown Medium'),
+            type=type_instance
         )
         db.session.merge(artwork)
         db.session.commit()
@@ -116,10 +114,10 @@ class Type(db.Model):
 
     __tablename__ = 'types'
 
-    id = db.Column(db.Integer, primary_key=True)  # Primary key of the type
-    name = db.Column(db.String, nullable=False, unique=True)  # Name of the type
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False, unique=True)
     
-    artworks = db.relationship('Artwork', backref='type', lazy=True)  # Relationship to artworks of this type
+    artworks = db.relationship('Artwork', backref='type', lazy=True)
 
     @classmethod
     def get_or_create(cls, name):
@@ -131,7 +129,6 @@ class Type(db.Model):
             db.session.commit()
         return type_instance
     
-    
     def get_artwork_ids(self):
         """Get all artwork IDs for this type."""
         return [artwork.id for artwork in self.artworks]
@@ -142,11 +139,9 @@ class Favorite(db.Model):
 
     __tablename__ = 'favorites'
 
-    id = db.Column(db.Integer, primary_key=True)  # Primary key of the favorite
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)  # Foreign key to the user
-    artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id', ondelete="cascade"), nullable=False)  # Foreign key to the artwork
-    artwork = db.relationship('Artwork', backref='favorites', lazy=True)
-
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)
+    artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id', ondelete="cascade"), nullable=False)
 
 
 class SearchHistory(db.Model):
@@ -154,9 +149,9 @@ class SearchHistory(db.Model):
 
     __tablename__ = 'search_history'
 
-    search_id = db.Column(db.Integer, primary_key=True)  # Primary key of the search history
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)  # Foreign key to the user
-    search_term = db.Column(db.String, nullable=False)  # The search term used by the user
+    search_id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)
+    search_term = db.Column(db.String, nullable=False)
     
     @classmethod
     def save_history(cls, user_id, search_term):
