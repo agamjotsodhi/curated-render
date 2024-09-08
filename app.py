@@ -383,7 +383,4 @@ def edit_profile():
     return render_template('profile/edit.html', form=form)
 
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()  # This will create the tables when the app starts
-        print("Tables created successfully.")
     app.run()
