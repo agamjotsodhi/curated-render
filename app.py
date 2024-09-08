@@ -21,10 +21,10 @@ app.config['SECRET_KEY'] = 'secret_picasso_101'
 
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # Prevent toolbar from intercepting redirects
-app.debug = True  # Enable debugging mode
+app.debug = False  # Enable debugging mode
 
 # Initialize the Debug Toolbar
-toolbar = DebugToolbarExtension(app)
+# toolbar = DebugToolbarExtension(app)
 
 
 connect_db(app)
@@ -382,6 +382,6 @@ def edit_profile():
 
     return render_template('profile/edit.html', form=form)
 
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    import create_tables  # This will run your table creation script.
+    app.run
