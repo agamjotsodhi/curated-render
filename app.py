@@ -9,7 +9,6 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql import cast, func
 from sqlalchemy.types import Integer
 import json
-import create_tables
 from api import get_artwork_by_ids, fetch_artworks_batches, fetch_artworks_by_query, get_suggested_artworks
 from flask_debugtoolbar import DebugToolbarExtension
 
@@ -384,5 +383,7 @@ def edit_profile():
     return render_template('profile/edit.html', form=form)
 
 if __name__ == '__main__':
-    import create_tables  # This will run your table creation script.
-    app.run
+    with app.app_context():
+        db.create_all()  # This will create the tables when the app starts
+        print("Tables created successfully.")
+    app.run()
