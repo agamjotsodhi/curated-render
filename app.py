@@ -383,4 +383,8 @@ def edit_profile():
     return render_template('profile/edit.html', form=form)
 
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Ensure all tables are created
+        # Example of fetching the first 100 artworks on startup
+        fetch_artworks_batches(start_id=1, end_id=101, batch_size=100)
     app.run()
