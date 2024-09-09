@@ -1,6 +1,6 @@
 import requests
 import logging
-from models import Artwork, Type, db, Favorite
+from models import Artwork, db
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.sql import func
 
@@ -29,11 +29,18 @@ def get_artwork_by_ids(artwork_ids):
     for artwork_data in data:
         try:
             artwork = Artwork.add_new_artwork(artwork_data)
-            db.session.commit()  # Ensure commit happens after each addition
-            logger.info(f"Added artwork {artwork.id} - {artwork.title} to the database.")
+            if artwork:
+                db.session.add(artwork)  # Explicitly add the new artwork to the session
+                db.session.commit()  # Commit after adding the artwork
+                logger.info(f"Added artwork {artwork.id} - {artwork.title} to the database.")
+            else:
+                logger.warning(f"Artwork data invalid or could not be processed: {artwork_data}")
         except SQLAlchemyError as e:
             db.session.rollback()  # Rollback in case of error
             logger.error(f"Error adding artwork {artwork_data.get('id')} to the database: {e}")
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Unexpected error processing artwork {artwork_data.get('id')}: {e}")
 
     return data
 
@@ -72,11 +79,18 @@ def fetch_artworks_by_query(query=None, theme=None):
     for artwork_data in data:
         try:
             artwork = Artwork.add_new_artwork(artwork_data)
-            db.session.commit()  # Ensure commit happens after each addition
-            logger.info(f"Added artwork {artwork.id} - {artwork.title} to the database.")
+            if artwork:
+                db.session.add(artwork)
+                db.session.commit()  # Commit after adding the artwork
+                logger.info(f"Added artwork {artwork.id} - {artwork.title} to the database.")
+            else:
+                logger.warning(f"Artwork data invalid or could not be processed: {artwork_data}")
         except SQLAlchemyError as e:
             db.session.rollback()  # Rollback in case of error
             logger.error(f"Error adding artwork {artwork_data.get('id')} to the database: {e}")
+        except Exception as e:
+            db.session.rollback()
+            logger.error(f"Unexpected error processing artwork {artwork_data.get('id')}: {e}")
 
     return data
 
