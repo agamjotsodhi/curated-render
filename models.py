@@ -133,7 +133,6 @@ class Type(db.Model):
         """Get all artwork IDs for this type."""
         return [artwork.id for artwork in self.artworks]
 
-
 class Favorite(db.Model):
     """Mapping a favorited artwork to user's profile"""
 
@@ -143,6 +142,8 @@ class Favorite(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id', ondelete="cascade"), nullable=False)
     artwork_id = db.Column(db.Integer, db.ForeignKey('artworks.id', ondelete="cascade"), nullable=False)
 
+    # Define the relationship to Artwork
+    artwork = db.relationship('Artwork', backref='favorites')
 
 class SearchHistory(db.Model):
     """Store all searches that user previously made"""
