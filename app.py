@@ -9,15 +9,16 @@ from sqlalchemy.exc import IntegrityError
 from sqlalchemy.sql import cast, func
 from sqlalchemy.types import Integer
 import json
+import os
 from api import get_artwork_by_ids, fetch_artworks_batches, fetch_artworks_by_query, get_suggested_artworks
 from flask_debugtoolbar import DebugToolbarExtension
 
 # Connection to sql database - curated:
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://curated_r101_user:YV6Det6FqmMUPUSlSCWoh38ASv2XS4d3@dpg-creumaaj1k6c73dgi6c0-a/curated_r101'
+app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'secret_picasso_101'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'secret_picasso_101')  # Optional fallback
 
 
 app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False  # Prevent toolbar from intercepting redirects
