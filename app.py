@@ -15,7 +15,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 
 # Connection to sql database - curated:
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = DATABASE_URL
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'secret_picasso_101')  # Optional fallback
