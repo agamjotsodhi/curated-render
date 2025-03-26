@@ -383,6 +383,16 @@ def edit_profile():
 
     return render_template('profile/edit.html', form=form)
 
+@app.route('/init-db')
+def init_db():
+    """One-time route to initialize DB tables and seed artwork data."""
+    try:
+        db.create_all()
+        fetch_artworks_batches(start_id=1, end_id=101, batch_size=100)
+        return "✅ Database initialized and artworks loaded successfully."
+    except Exception as e:
+        return f"❌ Error: {str(e)}"
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()  # Ensure all tables are created
