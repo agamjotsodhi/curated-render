@@ -389,9 +389,9 @@ def init_db():
     try:
         db.create_all()
         fetch_artworks_batches(start_id=1, end_id=101, batch_size=100)
-        return "✅ Database initialized and artworks loaded successfully."
+        return " Database initialized and artworks loaded successfully."
     except Exception as e:
-        return f"❌ Error: {str(e)}"
+        return f" Error: {str(e)}"
 
 if __name__ == '__main__':
     with app.app_context():
