@@ -385,11 +385,18 @@ def edit_profile():
 
 @app.route('/init-db')
 def init_db():
-    """One-time route to initialize DB tables and seed artwork data."""
+    """Initialize DB tables and fetch artworks from across the API range."""
     try:
         db.create_all()
+
+        # Fetch 5 spaced-out batches of 100 artworks each (500 artworks total)
         fetch_artworks_batches(start_id=1, end_id=101, batch_size=100)
-        return " Database initialized and artworks loaded successfully."
+        fetch_artworks_batches(start_id=1000, end_id=1100, batch_size=100)
+        fetch_artworks_batches(start_id=5000, end_id=5100, batch_size=100)
+        fetch_artworks_batches(start_id=10000, end_id=10100, batch_size=100)
+        fetch_artworks_batches(start_id=15000, end_id=15100, batch_size=100)
+
+        return "DB initialized with 500 varied artworks."
     except Exception as e:
         return f" Error: {str(e)}"
 
