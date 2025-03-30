@@ -52,15 +52,6 @@ def do_logout():
     if CURR_USER_KEY in session:
         del session[CURR_USER_KEY]
 
-
-@app.route("/init-db")
-def init_db():
-    try:
-        create_tables()
-        return "✅ Database tables created successfully!"
-    except Exception as e:
-        return f"❌ Error creating tables: {e}"
-
 # User Routes ##############################################################################################################################
 
 @app.route('/')
